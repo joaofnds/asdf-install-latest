@@ -44,13 +44,13 @@ func Update(pkg string) {
 
 	curr, err := asdf.Current(pkg)
 	if err != nil {
-		l.Println("failed to get current verison")
+		l.Printf("failed to get current verison: %s\n", err)
 		return
 	}
 
 	latest, err := asdf.Latest(pkg)
 	if err != nil {
-		l.Println("failed to get latest verison")
+		l.Printf("failed to get latest verison: %s\n", err)
 		return
 	}
 
