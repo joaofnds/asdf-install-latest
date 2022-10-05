@@ -70,36 +70,43 @@ func Update(pkg string) {
 		return
 	}
 
+	has, err := hasHook(pkg)
+	if err != nil {
+		l.Printf("a problem was found with the %q hook: %s", pkg, err)
+	}
+
+	if !has {
+		return
+	}
+
+	l.Printf("running %q post install hook", pkg)
+
 	err = runHook(pkg)
 	if err != nil {
 		l.Printf("failed to run hook: %s\n", err)
-		return
 	}
 }
 
-func runHook(pkg string) error {
-	hook := path.Join(config.HooksDir, pkg+".sh")
+func hasHook(pkg string) (bool, error) {
+	hook := hookPath(pkg)
 	info, err := os.Stat(hook)
 	if errors.Is(err, os.ErrNotExist) {
-		return nil
+		return false, nil
 	}
 
 	if err != nil {
-		return err
+		return true, err
 	}
 
 	if !isExecutable(info) {
-		return fmt.Errorf("hook is not executable, please run: chmod +x %q", hook)
+		return true, fmt.Errorf("hook is not executable, please run: chmod +x %q", hook)
 	}
 
-	cmd := &exec.Cmd{
-		Path:   hook,
-		Stdout: os.Stdout,
-		Stdin:  os.Stdin,
-		Stderr: os.Stderr,
-	}
+	return true, nil
+}
 
-	err = cmd.Run()
+func runHook(pkg string) error {
+	err := exec.Command(hookPath(pkg)).Run()
 	if err != nil {
 		return fmt.Errorf("hook failed: %w", err)
 	}
@@ -113,4 +120,8 @@ func isExecutable(info fs.FileInfo) bool {
 
 func NewPackageLogger(pkg string) log.Logger {
 	return *log.New(os.Stdout, "["+pkg+"] ", log.Lmsgprefix)
+}
+
+func hookPath(pkg string) string {
+	return path.Join(config.HooksDir, pkg+".sh")
 }
