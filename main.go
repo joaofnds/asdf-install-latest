@@ -42,7 +42,6 @@ func Update(pkg string) {
 		return
 	}
 
-	l.Println("started", pkg)
 	curr, err := asdf.Current(pkg)
 	if err != nil {
 		l.Println("failed to get current verison")
