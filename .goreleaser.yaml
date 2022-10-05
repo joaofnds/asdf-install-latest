@@ -6,7 +6,6 @@ brews:
 
     url_template: "https://github.com/joaofnds/asdf-install-latest/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
 
-    # The project name and current git tag are used in the format string.
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
 
     folder: Formula
