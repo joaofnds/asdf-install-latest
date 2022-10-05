@@ -28,6 +28,11 @@ func main() {
 		}(plugin)
 	}
 	wg.Wait()
+
+	err = asdf.Reshim()
+	if err != nil {
+		log.Fatalf("failed to reshim: %s", err)
+	}
 }
 
 func Update(pkg string) {

@@ -8,6 +8,10 @@ import (
 
 type ListResult = map[string]semver.Versions
 
+func Reshim() error {
+	return exec.Command("asdf", "reshim").Run()
+}
+
 func PluginList() ([]string, error) {
 	b, err := exec.Command("asdf", "plugin", "list").Output()
 	if err != nil {
