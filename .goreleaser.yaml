@@ -1,7 +1,7 @@
 brews:
   - tap:
       owner: joaofnds
-      name: tap
+      name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 
     url_template: "https://github.com/joaofnds/asdf-install-latest/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
