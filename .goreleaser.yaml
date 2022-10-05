@@ -1,0 +1,15 @@
+brews:
+  - tap:
+      owner: joaofnds
+      name: tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+
+    url_template: "https://github.com/joaofnds/asdf-install-latest/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+
+    # The project name and current git tag are used in the format string.
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+
+    folder: Formula
+    homepage: "https://github.com/joaofnds/asdf-install-latest"
+    description: "asdf utility to update plugins to their latest version"
+    license: "MIT"
