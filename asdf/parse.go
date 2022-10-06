@@ -44,7 +44,7 @@ func parseVersionList(b []byte) semver.Versions {
 	s := bufio.NewScanner(bytes.NewReader(b))
 	s.Split(bufio.ScanWords)
 	for s.Scan() {
-		if v, err := semver.NewVersion(s.Text()); err == nil {
+		if v, err := semver.NewVersion(s.Text()); err == nil && v.PreRelease == "" {
 			out = append(out, v)
 		}
 	}
