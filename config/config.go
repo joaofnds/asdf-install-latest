@@ -35,3 +35,7 @@ func init() {
 		Ignore[s.Text()] = true
 	}
 }
+
+func HookPath(pkg string) string {
+	return path.Join(HooksDir, pkg+".sh")
+}
