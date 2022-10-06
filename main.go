@@ -23,6 +23,7 @@ func main() {
 	}
 	wg.Wait()
 
+	println("reshiming...")
 	err = asdf.Reshim()
 	if err != nil {
 		log.Fatalf("failed to reshim: %s", err)
