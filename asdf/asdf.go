@@ -1,9 +1,8 @@
 package asdf
 
 import (
+	"ail/semver"
 	"os/exec"
-
-	"github.com/coreos/go-semver/semver"
 )
 
 type ListResult = map[string]semver.Versions

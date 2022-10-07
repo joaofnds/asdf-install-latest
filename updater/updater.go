@@ -27,7 +27,7 @@ func Update(pkg string) {
 		return
 	}
 
-	if !curr.LessThan(*latest) {
+	if !curr.LessThan(latest) {
 		logger.Println("no updates")
 		return
 	}

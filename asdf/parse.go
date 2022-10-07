@@ -1,11 +1,10 @@
 package asdf
 
 import (
+	"ail/semver"
 	"bufio"
 	"bytes"
 	"strings"
-
-	"github.com/coreos/go-semver/semver"
 )
 
 func parseResult(result []byte) ListResult {
@@ -65,15 +64,15 @@ func parseCurrent(b []byte) *semver.Version {
 }
 
 func parseSemVer(str string) *semver.Version {
-	v, err := semver.NewVersion(str)
-	if err == nil && v.PreRelease == "" {
+	v, err := semver.New(str)
+	if err == nil {
 		return v
 	}
 
 	if err != nil && strings.Contains(err.Error(), "not in dotted-tri format") {
 		str += ".0"
-		v, err = semver.NewVersion(str)
-		if err == nil && v.PreRelease == "" {
+		v, err = semver.New(str)
+		if err == nil {
 			return v
 		}
 	}
