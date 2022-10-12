@@ -45,6 +45,19 @@ func ListAllPkg(pkg string) (semver.Versions, error) {
 	return parseVersionList(b), nil
 }
 
+func LatestInstalled(pkg string) (*semver.Version, error) {
+	vs, err := ListPkg(pkg)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(vs) == 0 {
+		return nil, NewNoVersionsErr(pkg)
+	}
+
+	return vs[len(vs)-1], nil
+}
+
 func Latest(pkg string) (*semver.Version, error) {
 	vs, err := ListAllPkg(pkg)
 	if err != nil {

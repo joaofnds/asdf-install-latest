@@ -15,9 +15,9 @@ func Update(pkg string) {
 		return
 	}
 
-	curr, err := asdf.Current(pkg)
+	curr, err := asdf.LatestInstalled(pkg)
 	if err != nil {
-		logger.Printf("failed to get current version: %s\n", err)
+		logger.Printf("failed to get latest version: %s\n", err)
 		return
 	}
 
