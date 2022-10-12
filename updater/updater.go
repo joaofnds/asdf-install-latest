@@ -10,7 +10,7 @@ import (
 func Update(pkg string) {
 	logger := log.New(os.Stdout, "["+pkg+"] ", log.Lmsgprefix)
 
-	if config.Ignore[pkg] {
+	if config.IsIgnored(pkg) {
 		logger.Println("ignoring...")
 		return
 	}

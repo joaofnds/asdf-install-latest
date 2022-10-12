@@ -1,41 +1,58 @@
 package config
 
 import (
-	"bufio"
-	"errors"
 	"log"
 	"os"
 	"path"
+
+	"github.com/spf13/viper"
 )
 
-var (
-	Ignore     = map[string]bool{}
-	ConfigDir  string
-	HooksDir   string
-	IgnoreFile string
-)
+var Config AppConfig
+
+type AppConfig struct {
+	Ignore        []string
+	configDir     string
+	hooksDir      string
+	SkipSetGlobal bool `mapstructure:"skip_set_global"`
+}
 
 func init() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalf("could not get user home dir: %s", err)
 	}
-	ConfigDir = path.Join(home, ".config", "ail")
-	HooksDir = path.Join(ConfigDir, "hooks")
-	IgnoreFile = path.Join(ConfigDir, "ignore")
 
-	f, err := os.Open(IgnoreFile)
-	if err != nil && !errors.Is(err, os.ErrNotExist) {
-		log.Fatalf("could not open ignore file: %s", err)
+	Config = AppConfig{}
+
+	Config.configDir = path.Join(home, ".config", "ail")
+	Config.hooksDir = path.Join(Config.configDir, "hooks")
+
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(Config.configDir)
+
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			return
+		}
+		log.Fatalf("could not read config: %s", err)
 	}
 
-	s := bufio.NewScanner(f)
-	s.Split(bufio.ScanWords)
-	for s.Scan() {
-		Ignore[s.Text()] = true
+	if err := viper.UnmarshalExact(&Config); err != nil {
+		log.Fatalf("could not parse config: %s", err)
 	}
 }
 
 func HookPath(pkg string) string {
-	return path.Join(HooksDir, pkg+".sh")
+	return path.Join(Config.hooksDir, pkg+".sh")
+}
+
+func IsIgnored(pkg string) bool {
+	for _, p := range Config.Ignore {
+		if pkg == p {
+			return true
+		}
+	}
+	return false
 }
