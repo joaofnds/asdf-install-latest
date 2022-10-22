@@ -31,4 +31,4 @@ aurs:
       email: joaofnds@joaofnds.com
 
     package: |
-      install -Dm755 "./asdf-install-latest "${pkgdir}/usr/bin/asdf-install-latest"
+      install -Dm755 "./asdf-install-latest" "${pkgdir}/usr/bin/asdf-install-latest"
