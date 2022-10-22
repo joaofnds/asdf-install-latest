@@ -18,7 +18,9 @@ https://user-images.githubusercontent.com/9938253/195338904-29dab966-96e7-41e8-b
 brew install joaofnds/tap/asdf-install-latest
 ```
 
-[we also provide binaries for other systems](https://github.com/joaofnds/asdf-install-latest/releases)
+asdf-install-latest is also on aur as [asdf-install-latest-bin](https://aur.archlinux.org/packages/asdf-install-latest-bin)
+
+you can find builds for other systems in the [releases page](https://github.com/joaofnds/asdf-install-latest/releases)
 
 # Default config
 
