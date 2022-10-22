@@ -15,3 +15,20 @@ brews:
     homepage: "https://github.com/joaofnds/asdf-install-latest"
     description: "asdf utility to update plugins to their latest version"
     license: "MIT"
+
+aurs:
+  - name: asdf-install-latest-bin
+    homepage: "https://github.com/joaofnds/asdf-install-latest"
+    description: "asdf utility to update plugins to their latest version, for all you update freaks"
+    license: "MIT"
+    maintainers: ["João Fernandes <joaofnds@joaofnds.com>"]
+    contributors: ["João Fernandes <joaofnds@joaofnds.com>"]
+
+    private_key: "{{ .Env.AUR_KEY }}"
+    git_url: "ssh://aur@aur.archlinux.org/asdf-install-latest-bin.git"
+    commit_author:
+      name: joaofnds
+      email: joaofnds@joaofnds.com
+
+    package: |
+      install -Dm755 "./asdf-install-latest "${pkgdir}/usr/bin/asdf-install-latest"
