@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var reg = regexp.MustCompile(`\d+(.\d+)*`)
+var reg = regexp.MustCompile(`\d+(\.\d+)*`)
 
 type Version struct {
 	versions []int
