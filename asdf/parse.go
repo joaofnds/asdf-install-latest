@@ -44,13 +44,22 @@ func parseVersionList(b []byte) semver.Versions {
 	s := bufio.NewScanner(bytes.NewReader(b))
 	s.Split(bufio.ScanWords)
 	for s.Scan() {
-		if v := parseSemVer(s.Text()); v != nil {
+		if v := parseSemVer(removeCurrentMarkFromVersion(s.Text())); v != nil {
 			out = append(out, v)
 		}
 	}
 
 	semver.Sort(out)
 	return out
+}
+
+// removeCurrentMarkFromVersion removes the '*' char that asdf now uses on `asdf list`
+// to indicate which of the installed versions is currently being used
+func removeCurrentMarkFromVersion(s string) string {
+	if s[0] == '*' {
+		return s[1:]
+	}
+	return s
 }
 
 // parses output of `asdf current {plugin}`
