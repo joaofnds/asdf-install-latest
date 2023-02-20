@@ -116,9 +116,6 @@ func TestNew(t *testing.T) {
 }
 
 func TestVersion_Compare(t *testing.T) {
-	type fields struct {
-		versions []int
-	}
 	tests := []struct {
 		v1   *Version
 		v2   *Version
