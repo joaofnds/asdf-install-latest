@@ -27,7 +27,7 @@ func parseResult(result []byte) ListResult {
 }
 
 func parseWordList(b []byte) []string {
-	out := []string{}
+	var out []string
 
 	s := bufio.NewScanner(bytes.NewReader(b))
 	s.Split(bufio.ScanWords)
