@@ -32,7 +32,7 @@ func Update(pkg string) {
 		return
 	}
 
-	logger.Printf("will update from %q to %q\n", curr, latest)
+	logger.Printf("updating from %q to %q\n", curr, latest)
 
 	err = asdf.Install(pkg, latest)
 	if err != nil {
